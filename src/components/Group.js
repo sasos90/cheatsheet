@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Cheat from "./Cheat";
+import "./Group.css";
 
 class Group extends Component {
 

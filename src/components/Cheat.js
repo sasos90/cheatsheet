@@ -5,8 +5,8 @@ class Cheat extends Component {
   render() {
     return (
       <div className="Cheat">
-        <div>{this.props.desc}</div>
-        <div>{this.props.command}</div>
+        <div className="desc">{this.props.desc}</div>
+        <div className="command">{this.props.command}</div>
       </div>
     );
   }
