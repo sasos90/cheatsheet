@@ -3,13 +3,17 @@
 .Group {
   margin: 10px;
   h2 {
+    margin-bottom: 10px;
     font-weight: bold;
     background: $groupNameBg;
     color: white;
+    text-align: left;
+    padding: 5px;
   }
 
   .Cheat {
     margin: 4px 0px;
+    margin-top: 10px;
     border: 1px solid $cmdBg;
 
     .desc {
