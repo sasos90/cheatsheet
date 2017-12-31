@@ -1,5 +1,27 @@
+@import '../variables.scss';
+
 .Group {
+  margin: 10px;
   h2 {
     font-weight: bold;
+    background: $groupNameBg;
+    color: white;
   }
+
+  .Cheat {
+    margin: 4px 0px;
+    border: 1px solid $cmdBg;
+
+    .desc {
+      padding: 2px;
+      font-style: italic;
+    }
+
+    .command {
+      font-family: 'Roboto Mono';
+      background: $cmdBg;
+      padding: 2px;
+    }
+  }
+
 }
