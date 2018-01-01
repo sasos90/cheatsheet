@@ -1,7 +1,8 @@
-@import '../variables.scss';
+@import '../_variables.scss';
 
 .Group {
   margin: 10px;
+
   h2 {
     margin-bottom: 10px;
     font-weight: bold;
@@ -9,23 +10,7 @@
     color: white;
     text-align: left;
     padding: 5px;
+    font-size: 1em;
+    text-transform: uppercase;
   }
-
-  .Cheat {
-    margin: 4px 0px;
-    margin-top: 10px;
-    border: 1px solid $cmdBg;
-
-    .desc {
-      padding: 2px;
-      font-style: italic;
-    }
-
-    .command {
-      font-family: 'Roboto Mono';
-      background: $cmdBg;
-      padding: 2px;
-    }
-  }
-
 }
