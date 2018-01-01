@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import Group from "./components/Group";
+import {ApolloProvider} from "react-apollo";
+import {HttpLink, InMemoryCache} from "apollo-client-preset";
+import {ApolloClient} from "apollo-client";
+import gql from 'graphql-tag';
+
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'https://graphql.brandfolder.com/graphql' }),
+  cache: new InMemoryCache()
+});
 
 class App extends Component {
 
@@ -10,6 +19,14 @@ class App extends Component {
         <Group groupName={g.groupName} cheats={g.cheats}></Group>
       </div>
     ));
+  }
+
+  componentWillMount() {
+    client.query({ query: gql`{ viewer {
+      apiId
+    } }` }).then((res) => {
+      console.log(res);
+    });
   }
 
   render() {
@@ -42,9 +59,11 @@ class App extends Component {
     });
 
     return (
-      <div className="App">
-        <div className="row groups-wrapper">{this.renderGroups(groups)}</div>
-      </div>
+      <ApolloProvider client={client}>
+        <div className="App">
+          <div className="row groups-wrapper">{this.renderGroups(groups)}</div>
+        </div>
+      </ApolloProvider>
     );
   }
 }
