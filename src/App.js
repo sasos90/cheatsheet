@@ -5,8 +5,8 @@ import Group from "./components/Group";
 class App extends Component {
 
   renderGroups(groups) {
-    return groups.map(g => (
-      <div className="col-md-6 col-lg-4">
+    return groups.map((g, index) => (
+      <div key={index} className="col-md-6 col-lg-4">
         <Group groupName={g.groupName} cheats={g.cheats}></Group>
       </div>
     ));
