@@ -3,7 +3,17 @@ import './App.css';
 import Group from "./components/Group";
 
 class App extends Component {
+
+  renderGroups(groups) {
+    return groups.map(g => (
+      <div className="col-md-6 col-lg-4">
+        <Group groupName={g.groupName} cheats={g.cheats}></Group>
+      </div>
+    ));
+  }
+
   render() {
+    const groups = [];
     const gitCheats = [{
       command: 'git add .',
       desc: 'Add files to stage for commit'
@@ -11,6 +21,10 @@ class App extends Component {
       command: 'git reset HEAD',
       desc: 'Unstage all files from commit'
     }];
+    groups.push({
+      groupName: 'Git',
+      cheats: gitCheats
+    });
 
     const linuxCheats = [{
       command: 'rm -rf [filename]',
@@ -22,11 +36,14 @@ class App extends Component {
       command: 'netstat -avtpn',
       desc: 'Check used ports'
     }];
+    groups.push({
+      groupName: 'Linux terminal',
+      cheats: linuxCheats
+    });
 
     return (
       <div className="App">
-        <Group groupName={'Git'} cheats={gitCheats}></Group>
-        <Group groupName={'Linux terminal'} cheats={linuxCheats}></Group>
+        <div className="row groups-wrapper">{this.renderGroups(groups)}</div>
       </div>
     );
   }
