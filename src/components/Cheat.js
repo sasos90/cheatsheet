@@ -9,7 +9,7 @@ class Cheat extends Component {
       <div className="Cheat">
         <div className="desc">{this.props.desc}</div>
         <CopyToClipboard text={this.props.command}>
-          <div className="command"><span>$ </span><span className="cmd">{this.props.command}</span></div>
+          <div className="command"><span className="bash-char">$ </span><span className="cmd">{this.props.command}</span></div>
         </CopyToClipboard>
       </div>
     );

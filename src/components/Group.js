@@ -12,6 +12,7 @@ class Group extends Component {
 
   constructor() {
     super();
+    this.onKeyPress = this.onKeyPress.bind(this);
     this.inputChange = this.inputChange.bind(this);
   }
 
@@ -24,10 +25,34 @@ class Group extends Component {
     });
   }
 
+  onKeyPress(event) {
+    const target = event.target;
+    if (event.charCode === 13) {
+      if (target.name === 'newCommand') {
+        this.newDescriptionInput.focus();
+      } else if (target.name === 'newDescription') {
+        this.saveCheatProcess();
+      }
+    }
+  }
+
   renderCheats() {
     return this.props.cheats.map((c, index) => (
       <Cheat key={index} command={c.command} desc={c.desc}></Cheat>
     ));
+  }
+
+  saveCheatProcess() {
+    console.log(`Save the command "${this.state.newCommand}" to server! Description: "${this.state.newDescription}"`);
+    this.pushCommandToList();
+    this.resetInputs();
+  }
+
+  pushCommandToList() {
+    this.props.cheats.push({
+      desc: this.state.newDescription,
+      command: this.state.newCommand
+    });
   }
 
   render() {
@@ -36,13 +61,23 @@ class Group extends Component {
         <h2>{this.props.groupName}</h2>
         <div className="cheats-wrapper">{this.renderCheats()}</div>
         <div className="new-command-wrapper">
+          <div className="new-command">
+            <span className="bash-char">$&nbsp;</span>
+            <input type="text" name="newCommand" onKeyPress={this.onKeyPress} placeholder="Command" value={this.state.newCommand} onChange={this.inputChange} />
+          </div>
           { this.state.newCommand !== '' &&
             <input type="text" name="newDescription" placeholder="Description"
-              value={this.state.newDescription} onChange={this.inputChange} ref={(input) => { this.newDescriptionInput = input; }} />}
-          <input type="text" name="newCommand" placeholder="Command" value={this.state.newCommand} onChange={this.inputChange} />
+              value={this.state.newDescription} onKeyPress={this.onKeyPress} onChange={this.inputChange} ref={(input) => { this.newDescriptionInput = input; }} />}
         </div>
       </div>
     );
+  }
+
+  resetInputs() {
+    this.setState({
+      newDescription: '',
+      newCommand: ''
+    });
   }
 }
 

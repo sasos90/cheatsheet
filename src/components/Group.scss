@@ -13,4 +13,22 @@
     font-size: 1em;
     text-transform: uppercase;
   }
+
+  .new-command-wrapper {
+    input {
+      width: 100%;
+    }
+
+    input[name='newDescription'] {
+      margin-left: 10px;
+      width: calc(100% - 10px);
+    }
+
+    .new-command {
+      font-family: 'Roboto Mono', sans-serif;
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+    }
+  }
 }
