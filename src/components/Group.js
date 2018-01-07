@@ -6,6 +6,7 @@ import "./Group.css";
 class Group extends Component {
 
   state = {
+    enterNewCommand: false,
     newDescription: '',
     newCommand: ''
   };
@@ -14,6 +15,7 @@ class Group extends Component {
     super();
     this.onKeyPress = this.onKeyPress.bind(this);
     this.inputChange = this.inputChange.bind(this);
+    this.setNewCommandState = this.setNewCommandState.bind(this);
   }
 
   inputChange(event) {
@@ -29,9 +31,9 @@ class Group extends Component {
     const target = event.target;
     if (event.charCode === 13) {
       if (target.name === 'newCommand') {
-        this.newDescriptionInput.focus();
-      } else if (target.name === 'newDescription') {
         this.saveCheatProcess();
+      } else if (target.name === 'newDescription') {
+        this.newCommandInput.focus();
       }
     }
   }
@@ -60,26 +62,41 @@ class Group extends Component {
       <div className="Group">
         <h2>{this.props.groupName}</h2>
         <div className="cheats-wrapper">{this.renderCheats()}</div>
-        <div className="new-command-wrapper">
+        { this.state.enterNewCommand ? <div className="new-command-wrapper">
+          <input type="text" name="newDescription" placeholder="Description"
+            value={this.state.newDescription} onKeyPress={this.onKeyPress} onChange={this.inputChange}/>
           <div className="new-command">
             <span className="bash-char">$&nbsp;</span>
-            <input type="text" name="newCommand" onKeyPress={this.onKeyPress} placeholder="Command" value={this.state.newCommand} onChange={this.inputChange} />
+            <input type="text" name="newCommand" onKeyPress={this.onKeyPress} placeholder="Command"
+              value={this.state.newCommand} onChange={this.inputChange} ref={(input) => { this.newCommandInput = input; }} />
           </div>
-          { this.state.newCommand !== '' &&
-            <input type="text" name="newDescription" placeholder="Description"
-              value={this.state.newDescription} onKeyPress={this.onKeyPress} onChange={this.inputChange} ref={(input) => { this.newDescriptionInput = input; }} />}
-        </div>
+        </div> :
+        <Plus onClick={this.setNewCommandState}></Plus> }
       </div>
     );
   }
 
   resetInputs() {
     this.setState({
+      enterNewCommand: false,
       newDescription: '',
       newCommand: ''
     });
   }
+
+  setNewCommandState() {
+    this.setState({enterNewCommand: true});
+  }
 }
+
+const Plus = (props) => (
+  <div className="Plus">
+    <svg viewBox="0 0 512 512" width={`${props.size || 30}px`}>
+      <path d="M256 48C141.1 48 48 141.1 48 256s93.1 208 208 208c114.9 0 208-93.1 208-208S370.9 48 256 48zM256 446.7c-105.1 0-190.7-85.5-190.7-190.7S150.9 65.3 256 65.3 446.7 150.9 446.7 256 361.1 446.7 256 446.7z"/>
+      <polygon points="264.1 128 247.3 128 247.3 247.9 128 247.9 128 264.7 247.3 264.7 247.3 384 264.1 384 264.1 264.7 384 264.7 384 247.9 264.1 247.9"/>
+    </svg>
+  </div>
+);
 
 Group.propTypes = {
   groupName: PropTypes.string.isRequired,
