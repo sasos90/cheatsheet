@@ -44,7 +44,7 @@ class Group extends Component {
 
   renderCheats() {
     return this.props.cheats.map((c, index) => (
-      <Cheat key={index} command={c.command} desc={c.desc} syncing={c.syncing}></Cheat>
+      <Cheat key={index} command={c.command} desc={c.desc} syncing={c.syncing}/>
     ));
   }
 
@@ -91,7 +91,7 @@ class Group extends Component {
           </div>
         </div> :
         <div className="plus-wrapper" onClick={this.setNewCommandState}>
-          <Plus></Plus>
+          <Plus />
         </div>}
       </div>
     );
