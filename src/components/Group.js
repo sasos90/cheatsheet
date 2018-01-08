@@ -6,7 +6,7 @@ import "./Group.css";
 class Group extends Component {
 
   state = {
-    enterNewCommand: false,
+    enteringNewCommand: false,
     newDescription: '',
     newCommand: ''
   };
@@ -54,10 +54,16 @@ class Group extends Component {
     this.resetInputs();
     // Simulate GraphQL call.
     setTimeout(() => {
-      this.props.cheats.map(c => {
-        c.syncing = false;
-        return c;
-      });
+      if (true) {
+        // Set cheats as synchronised
+        this.props.cheats.map(c => {
+          c.syncing = false;
+          return c;
+        });
+      } else {
+        // Revert cheat.
+        delete this.props.cheats[this.props.cheats.length - 1];
+      }
       this.setState({});
     }, 1000);
   }
@@ -75,7 +81,7 @@ class Group extends Component {
       <div className="Group">
         <h2>{this.props.groupName}</h2>
         <div className="cheats-wrapper">{this.renderCheats()}</div>
-        { this.state.enterNewCommand ? <div className="new-command-wrapper">
+        { this.state.enteringNewCommand ? <div className="new-command-wrapper">
           <input type="text" name="newDescription" placeholder="Description"
             value={this.state.newDescription} onKeyPress={this.onKeyPress} onChange={this.inputChange} ref={(input) => { this.newDescriptionInput = input; }} />
           <div className="new-command">
@@ -93,14 +99,14 @@ class Group extends Component {
 
   resetInputs() {
     this.setState({
-      enterNewCommand: false,
+      enteringNewCommand: false,
       newDescription: '',
       newCommand: ''
     });
   }
 
   setNewCommandState() {
-    this.setState({enterNewCommand: true});
+    this.setState({enteringNewCommand: true});
     setTimeout(() => {
       this.newDescriptionInput.focus();
     }, 0);
