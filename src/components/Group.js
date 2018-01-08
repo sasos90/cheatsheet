@@ -31,7 +31,11 @@ class Group extends Component {
     const target = event.target;
     if (event.charCode === 13) {
       if (target.name === 'newCommand') {
-        this.saveCheatProcess();
+        if (this.isDescriptionEmpty()) {
+          this.newDescriptionInput.focus();
+        } else if (this.commandNotEmpty()) {
+          this.saveCheatProcess();
+        }
       } else if (target.name === 'newDescription') {
         this.newCommandInput.focus();
       }
@@ -64,14 +68,16 @@ class Group extends Component {
         <div className="cheats-wrapper">{this.renderCheats()}</div>
         { this.state.enterNewCommand ? <div className="new-command-wrapper">
           <input type="text" name="newDescription" placeholder="Description"
-            value={this.state.newDescription} onKeyPress={this.onKeyPress} onChange={this.inputChange}/>
+            value={this.state.newDescription} onKeyPress={this.onKeyPress} onChange={this.inputChange} ref={(input) => { this.newDescriptionInput = input; }} />
           <div className="new-command">
             <span className="bash-char">$&nbsp;</span>
             <input type="text" name="newCommand" onKeyPress={this.onKeyPress} placeholder="Command"
               value={this.state.newCommand} onChange={this.inputChange} ref={(input) => { this.newCommandInput = input; }} />
           </div>
         </div> :
-        <Plus onClick={this.setNewCommandState}></Plus> }
+        <div className="plus-wrapper" onClick={this.setNewCommandState}>
+          <Plus></Plus>
+        </div>}
       </div>
     );
   }
@@ -86,6 +92,14 @@ class Group extends Component {
 
   setNewCommandState() {
     this.setState({enterNewCommand: true});
+  }
+
+  commandNotEmpty() {
+    return this.state.newCommand !== "";
+  }
+
+  isDescriptionEmpty() {
+    return this.state.newDescription === "";
   }
 }
 

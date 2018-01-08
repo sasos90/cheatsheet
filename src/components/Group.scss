@@ -31,4 +31,16 @@
       align-items: center;
     }
   }
+
+  .Plus {
+    cursor: pointer;
+    &:hover {
+      background: $colorGreyBright;
+    }
+
+    svg {
+      margin: 0 auto;
+      display: block;
+    }
+  }
 }
