@@ -44,7 +44,7 @@ class Group extends Component {
 
   renderCheats() {
     return this.props.cheats.map((c, index) => (
-      <Cheat key={index} command={c.command} desc={c.desc}></Cheat>
+      <Cheat key={index} command={c.command} desc={c.desc} syncing={c.syncing}></Cheat>
     ));
   }
 
@@ -52,12 +52,21 @@ class Group extends Component {
     console.log(`Save the command "${this.state.newCommand}" to server! Description: "${this.state.newDescription}"`);
     this.pushCommandToList();
     this.resetInputs();
+    // Simulate GraphQL call.
+    setTimeout(() => {
+      this.props.cheats.map(c => {
+        c.syncing = false;
+        return c;
+      });
+      this.setState({});
+    }, 1000);
   }
 
   pushCommandToList() {
     this.props.cheats.push({
       desc: this.state.newDescription,
-      command: this.state.newCommand
+      command: this.state.newCommand,
+      syncing: true
     });
   }
 
@@ -92,6 +101,9 @@ class Group extends Component {
 
   setNewCommandState() {
     this.setState({enterNewCommand: true});
+    setTimeout(() => {
+      this.newDescriptionInput.focus();
+    }, 0);
   }
 
   commandNotEmpty() {

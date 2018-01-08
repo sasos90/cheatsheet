@@ -11,6 +11,7 @@ class Cheat extends Component {
         <CopyToClipboard text={this.props.command}>
           <div className="command"><span className="bash-char">$ </span><span className="cmd">{this.props.command}</span></div>
         </CopyToClipboard>
+        {this.props.syncing === true && <div className="syncing"></div>}
       </div>
     );
   }
